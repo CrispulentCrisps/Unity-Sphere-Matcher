@@ -8,11 +8,16 @@ public class SphereAI : MonoBehaviour
     PathCreator PC;
     float AreaTravelled;
     public bool IsMoving = false;
+    public bool Backwards = false;
+    public float Speed;
+    public float AimSpeed;
     public int ID;
+    public int CID;
     private void Start()
     {
         PC = GameObject.FindGameObjectWithTag("ActivePath").GetComponent<PathCreator>();
         ID = GameManager.SphereNum;
+        Speed = GameManager.SphereSpeed;
         gameObject.name = "Sphere - ID: " + ID;
         GameManager.SphereNum += 1;
     }
@@ -21,7 +26,18 @@ public class SphereAI : MonoBehaviour
     {
         if (IsMoving)
         {
-            AreaTravelled += GameManager.SphereSpeed * Time.deltaTime;
+            if (Speed < AimSpeed)
+            {
+                Speed += AimSpeed * Time.deltaTime;
+            }
+            if (Backwards)
+            {
+                AreaTravelled -= Speed * Time.deltaTime;
+            }
+            else
+            {
+                AreaTravelled += Speed * Time.deltaTime;
+            }
         }
         transform.position = PC.path.GetPointAtDistance(AreaTravelled, EndOfPathInstruction.Stop);
     }

@@ -31,6 +31,7 @@ public class SphereSpawner : MonoBehaviour
             GameObject NewSphere = Instantiate(Sphere, new Vector3(-90f, -90f), Quaternion.identity);
             NewSphere.GetComponent<SphereAI>().SetTraversed(GameManager.SAI[GameManager.SAI.Count - 1].Traversed() - 0.75f);
             int Choice = Random.Range(0, 8);
+            NewSphere.GetComponent<SphereAI>().CID = Choice;
             switch (Choice)
             {
                 default:

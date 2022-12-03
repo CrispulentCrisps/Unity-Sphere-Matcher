@@ -20,7 +20,7 @@ public class PathManager : MonoBehaviour
         {
             GameManager.AimSpeed = DangerSpeed;
         }
-        else if (BallPerc > StartZone && BallPerc < StartZone)
+        else if (BallPerc > StartZone && BallPerc < DangerZone)
         {
             GameManager.AimSpeed = NormalSpeed;
         }

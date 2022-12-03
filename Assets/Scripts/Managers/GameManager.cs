@@ -98,11 +98,25 @@ public class GameManager : MonoBehaviour
                 //Carriage
                 else
                 {
-                    if (SAI[i + 1].Traversed() - SAI[i].Traversed() <= SizeThresh)
+                    Debug.Log("Index: " + i + "," + (i+1) + " Difference: " + (SAI[i + 1].Traversed() - SAI[i].Traversed()));
+                    if (SAI[i].Traversed() - SAI[i+1].Traversed() <= SizeThresh)
                     {
+                        Debug.Log("Index: " + i + " Bumped");
                         SAI[i].SetTraversed(SAI[i + 1].Traversed() + SizeThresh);
                     }
                     SAI[i].IsMoving = false;
+
+                    //Attraction
+                    if (SAI[i].CID == SAI[i+1].CID || SAI[i+1].Backwards)
+                    {
+                        SAI[i].IsMoving = true;
+                        SAI[i].Backwards = true;
+                    }
+                    else
+                    {
+                        SAI[i].IsMoving = false;
+                        SAI[i].Backwards = false;
+                    }
                 }
             }
         }
