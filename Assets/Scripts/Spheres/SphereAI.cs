@@ -11,6 +11,7 @@ public class SphereAI : MonoBehaviour
     public bool Backwards = false;
     public float Speed;
     public float AimSpeed;
+    float DampeningSpeed = 1f;
     public int ID;
     public int CID;
     private void Start()
@@ -26,19 +27,27 @@ public class SphereAI : MonoBehaviour
     {
         if (IsMoving)
         {
-            if (Speed < AimSpeed)
+            if (Backwards)
+            {
+                Speed -= DampeningSpeed * Time.deltaTime;
+            }
+
+            else if (Speed < AimSpeed)
             {
                 Speed += AimSpeed * Time.deltaTime;
             }
-            if (Backwards)
+            else if (Speed > AimSpeed)
             {
-                AreaTravelled -= Speed * Time.deltaTime;
+                Speed -= AimSpeed * Time.deltaTime;
             }
-            else
-            {
-                AreaTravelled += Speed * Time.deltaTime;
-            }
+
+            AreaTravelled += Speed * Time.deltaTime;
         }
+        else if (Backwards)
+        {
+            AreaTravelled -= Speed * Time.deltaTime;
+        }
+
         transform.position = PC.path.GetPointAtDistance(AreaTravelled, EndOfPathInstruction.Stop);
     }
 

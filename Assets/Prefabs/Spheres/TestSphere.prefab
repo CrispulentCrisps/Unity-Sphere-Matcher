@@ -10,8 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 8409820970086089369}
   - component: {fileID: 1866385580650324205}
-  - component: {fileID: -2831258855712081030}
   - component: {fileID: 4301898418363757017}
+  - component: {fileID: 5294025678290266154}
   m_Layer: 0
   m_Name: TestSphere
   m_TagString: Sphere
@@ -46,22 +46,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 754d5f2534dcc4a42b7baf192774dd89, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Sr: {fileID: 0}
   IsMoving: 0
+  Backwards: 0
+  Speed: 0
+  AimSpeed: 0
   ID: 0
---- !u!135 &-2831258855712081030
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8409820970086089373}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}
+  CID: 0
 --- !u!212 &4301898418363757017
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -114,3 +104,16 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!135 &5294025678290266154
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8409820970086089373}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Center: {x: 0, y: 0, z: 0}

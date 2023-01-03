@@ -5,16 +5,17 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     public PathManager pathManager;
-    
+
     public static List<GameObject> Spheres;
     public static List<SphereAI> SAI;
-    
+
     public static float SphereSpeed;
     public static float AimSpeed;
-    
-    public float SizeThresh;
 
-    private float ChanegAmp = 5f;
+    public float SizeThresh;
+    public float MinMagDist;
+
+    private float ChanegAmp = 3f;
 
     public static int SphereNum = 0;
 
@@ -29,7 +30,7 @@ public class GameManager : MonoBehaviour
     public void DestorySphere()
     {
         #region TO-BE-DELETED
-        
+
         int HitID;
         if (Input.GetMouseButtonDown(0))
         {
@@ -98,25 +99,43 @@ public class GameManager : MonoBehaviour
                 //Carriage
                 else
                 {
-                    Debug.Log("Index: " + i + "," + (i+1) + " Difference: " + (SAI[i + 1].Traversed() - SAI[i].Traversed()));
-                    if (SAI[i].Traversed() - SAI[i+1].Traversed() <= SizeThresh)
+                    //Debug.Log("Index: " + i + "," + (i + 1) + " Difference: " + (SAI[i + 1].Traversed() - SAI[i].Traversed()));
+                    //Collision
+                    if (SAI[i].Traversed() - SAI[i + 1].Traversed() <= SizeThresh)
                     {
-                        Debug.Log("Index: " + i + " Bumped");
                         SAI[i].SetTraversed(SAI[i + 1].Traversed() + SizeThresh);
+                        SAI[i].Backwards = false;
                     }
                     SAI[i].IsMoving = false;
 
-                    //Attraction
-                    if (SAI[i].CID == SAI[i+1].CID || SAI[i+1].Backwards)
+                    #region Magnetism
+
+                    //Puller
+                    if (SAI[i].CID == SAI[i + 1].CID)
                     {
-                        SAI[i].IsMoving = true;
-                        SAI[i].Backwards = true;
+                        if (SAI[i].Traversed() - SAI[i + 1].Traversed() <= SizeThresh + MinMagDist)
+                        {
+                            SAI[i].IsMoving = true;
+                            SAI[i].Backwards = true;
+                        }
                     }
+                    //Back-Carriage
+                    else if (SAI[i + 1].Backwards)
+                    {
+                        if (SAI[i].Traversed() - SAI[i + 1].Traversed() <= SizeThresh + MinMagDist)
+                        {
+                            SAI[i].IsMoving = false;
+                            SAI[i].Speed = SAI[i+1].Speed;
+                        }
+                    }
+                    
                     else
                     {
                         SAI[i].IsMoving = false;
                         SAI[i].Backwards = false;
                     }
+
+                    #endregion
                 }
             }
         }
@@ -124,7 +143,6 @@ public class GameManager : MonoBehaviour
         {
             SAI[0].IsMoving = true;
         }
-
         #endregion
     }
 

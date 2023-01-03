@@ -13,7 +13,7 @@ public class SphereSpawner : MonoBehaviour
         ORANGE = 5,
         PURPLE = 6,
         WHITE = 7,
-        BLACK = 8;  
+        BLACK = 8;
     public GameObject Sphere;
     private void Start()
     {
@@ -53,7 +53,7 @@ public class SphereSpawner : MonoBehaviour
                     NewSphere.GetComponent<SpriteRenderer>().color = Color.cyan;
                     break;
                 case ORANGE:
-                    NewSphere.GetComponent<SpriteRenderer>().color = new Color(1f,0.4f,0f,255f);
+                    NewSphere.GetComponent<SpriteRenderer>().color = new Color(1f, 0.4f, 0f, 255f);
                     break;
                 case PURPLE:
                     NewSphere.GetComponent<SpriteRenderer>().color = new Color(.5f, 0f, .5f, 255f);
