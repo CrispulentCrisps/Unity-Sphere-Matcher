@@ -219,11 +219,11 @@ GameObject:
   - component: {fileID: 124648775}
   m_Layer: 0
   m_Name: TestPath-2
-  m_TagString: ActivePath
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &124648775
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -466,7 +466,7 @@ MonoBehaviour:
   m_VolumeTrigger: {fileID: 0}
   m_VolumeFrameworkUpdateModeOption: 2
   m_RenderPostProcessing: 0
-  m_Antialiasing: 0
+  m_Antialiasing: 1
   m_AntialiasingQuality: 2
   m_StopNaN: 0
   m_Dithering: 0
@@ -936,7 +936,7 @@ Transform:
   m_GameObject: {fileID: 842742778}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.075, y: 1.075, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1092018575}
@@ -956,11 +956,11 @@ GameObject:
   - component: {fileID: 1051405273}
   m_Layer: 0
   m_Name: TestPath-3
-  m_TagString: Untagged
+  m_TagString: ActivePath
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1051405273
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1041,7 +1041,7 @@ MonoBehaviour:
       - 0
       globalNormalsAngle: 0
       flipNormals: 0
-    vertexPathUpToDate: 0
+    vertexPathUpToDate: 1
     vertexPathMaxAngleError: 0.3
     vertexPathMinVertexSpacing: 0.01
     showTransformTool: 1
@@ -1071,7 +1071,7 @@ Transform:
   m_GameObject: {fileID: 1051405272}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.075, y: 1.075, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1098015426}
@@ -1157,7 +1157,7 @@ Transform:
   m_GameObject: {fileID: 1092018573}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 2.085, y: 2.085, z: 1}
+  m_LocalScale: {x: 2.1, y: 2.085, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 842742780}
@@ -1392,11 +1392,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PC: {fileID: 2080000784}
-  DangerZone: 0.9
+  DangerZone: 0.8
   StartZone: 0.2
   StartSpeed: 10
   DangerSpeed: 0.5
-  NormalSpeed: 5
+  NormalSpeed: 2
 --- !u!1 &1277933154
 GameObject:
   m_ObjectHideFlags: 0

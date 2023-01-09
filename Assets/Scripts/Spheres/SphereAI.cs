@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using PathCreation;
 
@@ -8,44 +6,53 @@ public class SphereAI : MonoBehaviour
     PathCreator PC;
     float AreaTravelled;
     public bool IsMoving = false;
-    public bool Backwards = false;
+    public bool Puller = false;
+    public bool Pullee = false;
     public float Speed;
     public float AimSpeed;
-    float DampeningSpeed = 1f;
+    float DampeningSpeed = 3f;
     public int ID;
     public int CID;
+    //DEBUG
+    private Color SourceColour;
     private void Start()
     {
         PC = GameObject.FindGameObjectWithTag("ActivePath").GetComponent<PathCreator>();
         ID = GameManager.SphereNum;
-        Speed = GameManager.SphereSpeed;
+        Speed = GameManager.ZoneSpeed;
         gameObject.name = "Sphere - ID: " + ID;
         GameManager.SphereNum += 1;
+        //DEBUG
+        SourceColour = gameObject.GetComponent<SpriteRenderer>().color;
     }
 
     private void Update()
     {
         if (IsMoving)
         {
-            if (Backwards)
-            {
-                Speed -= DampeningSpeed * Time.deltaTime;
-            }
-
-            else if (Speed < AimSpeed)
-            {
-                Speed += AimSpeed * Time.deltaTime;
-            }
-            else if (Speed > AimSpeed)
+            if (Speed < AimSpeed)
             {
                 Speed -= AimSpeed * Time.deltaTime;
             }
+            else if (Speed > AimSpeed)
+            {
+                Speed += AimSpeed * Time.deltaTime;
+            }
 
             AreaTravelled += Speed * Time.deltaTime;
+            gameObject.GetComponent<SpriteRenderer>().color = Color.white;
         }
-        else if (Backwards)
+        else if (Puller || Pullee)
         {
-            AreaTravelled -= Speed * Time.deltaTime;
+            gameObject.GetComponent<SpriteRenderer>().color = Color.black;
+            Speed -= DampeningSpeed * Time.deltaTime;
+            AreaTravelled += Speed * Time.deltaTime;
+        }
+        else
+        {
+            AreaTravelled += Speed * Time.deltaTime;
+            Speed *= .9999999f;
+            gameObject.GetComponent<SpriteRenderer>().color = SourceColour;
         }
 
         transform.position = PC.path.GetPointAtDistance(AreaTravelled, EndOfPathInstruction.Stop);

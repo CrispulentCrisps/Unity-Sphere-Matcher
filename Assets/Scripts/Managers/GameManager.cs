@@ -9,7 +9,7 @@ public class GameManager : MonoBehaviour
     public static List<GameObject> Spheres;
     public static List<SphereAI> SAI;
 
-    public static float SphereSpeed;
+    public static float ZoneSpeed;
     public static float AimSpeed;
 
     public float SizeThresh;
@@ -19,9 +19,11 @@ public class GameManager : MonoBehaviour
 
     public static int SphereNum = 0;
 
+    private bool Strikable = false;
+
     private void Awake()
     {
-        SphereSpeed = pathManager.StartSpeed;
+        ZoneSpeed = pathManager.StartSpeed;
         AimSpeed = pathManager.StartSpeed;
         Spheres = new List<GameObject>();
         SAI = new List<SphereAI>();
@@ -48,7 +50,7 @@ public class GameManager : MonoBehaviour
                     Spheres.Remove(Spheres[HitID]);
                     Debug.Log(SAI.Count);
                 }
-
+                /*
                 for (int i = HitID; i < Spheres.Count; i++)
                 {
                     if (SAI[i].ID > 0)
@@ -56,7 +58,7 @@ public class GameManager : MonoBehaviour
                         SAI[i].SetID(SAI[i].ID - 1);
                     }
                 }
-
+                */
                 SphereNum -= 1;
             }
         }
@@ -69,19 +71,19 @@ public class GameManager : MonoBehaviour
         DestorySphere();
 
         //Zone speeds
-        if (AimSpeed > SphereSpeed)
+        if (AimSpeed > ZoneSpeed)
         {
-            SphereSpeed += Time.deltaTime * ChanegAmp;
-            SphereSpeed = Mathf.Min(SphereSpeed, AimSpeed);
+            ZoneSpeed += Time.deltaTime * ChanegAmp;
+            ZoneSpeed = Mathf.Min(ZoneSpeed, AimSpeed);
         }
-        else if (AimSpeed < SphereSpeed)
+        else if (AimSpeed < ZoneSpeed)
         {
-            SphereSpeed -= Time.deltaTime * ChanegAmp;
-            SphereSpeed = Mathf.Max(SphereSpeed, AimSpeed);
+            ZoneSpeed -= Time.deltaTime * ChanegAmp;
+            ZoneSpeed = Mathf.Max(ZoneSpeed, AimSpeed);
         }
         else
         {
-            SphereSpeed = AimSpeed;
+            ZoneSpeed = AimSpeed;
         }
 
         #region Sphere collision data
@@ -91,6 +93,8 @@ public class GameManager : MonoBehaviour
         {
             for (int i = Spheres.Count - 1; i >= 0; i--)
             {
+                SAI[i].SetID(i);
+
                 //Pusher
                 if (i == Spheres.Count - 1)
                 {
@@ -100,42 +104,63 @@ public class GameManager : MonoBehaviour
                 else
                 {
                     //Debug.Log("Index: " + i + "," + (i + 1) + " Difference: " + (SAI[i + 1].Traversed() - SAI[i].Traversed()));
+
                     //Collision
                     if (SAI[i].Traversed() - SAI[i + 1].Traversed() <= SizeThresh)
                     {
                         SAI[i].SetTraversed(SAI[i + 1].Traversed() + SizeThresh);
-                        SAI[i].Backwards = false;
+                        if (Strikable && SAI[i].Puller)
+                        {
+                            Debug.LogWarning("STRUCK");
+                            Strikable = false;
+                            for (int j = i; j < Spheres.Count; j++)
+                            {
+                                //if (SAI[j].ID > 0)
+                                //{
+                                    SAI[j].Speed = -10;
+                                //}
+                            }
+                            //Remove Pullee Att
+                            for (int j = i; j > 0 && SAI[j-1].Pullee; j--)
+                            {
+                                SAI[j-1].Pullee = false;
+                            }
+
+                            SAI[i].Puller = false;
+                        }
                     }
                     SAI[i].IsMoving = false;
 
                     #region Magnetism
 
                     //Puller
-                    if (SAI[i].CID == SAI[i + 1].CID)
-                    {
-                        if (SAI[i].Traversed() - SAI[i + 1].Traversed() <= SizeThresh + MinMagDist)
-                        {
-                            SAI[i].IsMoving = true;
-                            SAI[i].Backwards = true;
-                        }
-                    }
-                    //Back-Carriage
-                    else if (SAI[i + 1].Backwards)
-                    {
-                        if (SAI[i].Traversed() - SAI[i + 1].Traversed() <= SizeThresh + MinMagDist)
-                        {
-                            SAI[i].IsMoving = false;
-                            SAI[i].Speed = SAI[i+1].Speed;
-                        }
-                    }
-                    
-                    else
+                    if (SAI[i].CID == SAI[i + 1].CID && SAI[i].Traversed() - SAI[i + 1].Traversed() >= SizeThresh + MinMagDist)
                     {
                         SAI[i].IsMoving = false;
-                        SAI[i].Backwards = false;
+                        SAI[i].Puller = true;
+                    }
+                    //Pullee
+                    if (SAI[i + 1].Puller || SAI[i + 1].Pullee)
+                    {
+                        if (SAI[i].Traversed() - SAI[i + 1].Traversed() <= SizeThresh + MinMagDist)
+                        {
+                            SAI[i].Pullee = true;
+                            SAI[i].AimSpeed = SAI[i + 1].AimSpeed;
+                            SAI[i].Speed = SAI[i + 1].Speed;
+                        }
                     }
 
                     #endregion
+
+                    #region SpherePhysics
+
+                    if (SAI[i].Puller && IsStrikable(i))
+                    {
+                        Strikable = true;
+                    }
+
+                    #endregion
+
                 }
             }
         }
@@ -145,9 +170,21 @@ public class GameManager : MonoBehaviour
         }
         #endregion
     }
+    /**/
+    public bool IsStrikable(int i)
+    {
+        if (SAI[i].Traversed() - SAI[i+1].Traversed() <= SizeThresh)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    } 
 
     public void SetSpeed(float speed)
     {
-        SphereSpeed = speed;
+        ZoneSpeed = speed;
     }
 }

@@ -5,7 +5,7 @@ using UnityEngine;
 public class SphereSpawner : MonoBehaviour
 {
     //Sphere colours
-    const int RED = 0,
+    private const int RED = 0,
         GREEN = 1,
         BLUE = 2,
         YELLOW = 3,
@@ -14,6 +14,7 @@ public class SphereSpawner : MonoBehaviour
         PURPLE = 6,
         WHITE = 7,
         BLACK = 8;
+    private int LastChoice;
     public GameObject Sphere;
     private void Start()
     {
