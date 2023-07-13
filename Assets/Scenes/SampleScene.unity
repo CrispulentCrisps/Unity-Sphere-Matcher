@@ -219,11 +219,11 @@ GameObject:
   - component: {fileID: 124648775}
   m_Layer: 0
   m_Name: TestPath-2
-  m_TagString: Untagged
+  m_TagString: ActivePath
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &124648775
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -250,12 +250,12 @@ MonoBehaviour:
       - {x: -1.1590564, y: -4.434953, z: 0}
       - {x: -2.2887208, y: -4.407007, z: 0}
       - {x: -4.5126925, y: -4.35199, z: 0}
-      - {x: -4.0323615, y: -2.7759535, z: 0}
-      - {x: -4.0610595, y: -1.4348836, z: 0}
-      - {x: -4.09703, y: 0.2460382, z: 0}
-      - {x: -4.0641003, y: 0.11749643, z: 0}
+      - {x: -4.1154776, y: -2.775971, z: 0}
+      - {x: -4.0876136, y: -1.4348836, z: 0}
+      - {x: -4.0527096, y: 0.24502966, z: 0}
+      - {x: -4.039418, y: 0.07224171, z: 0}
       - {x: -4.0097213, y: 1.9133413, z: 0}
-      - {x: -3.9987097, y: 2.2769918, z: 0}
+      - {x: -4.003854, y: 2.2771113, z: 0}
       - {x: -3.6923394, y: 2.3008668, z: 0}
       - {x: -3.3933527, y: 2.3000476, z: 0}
       - {x: 0.6419444, y: 2.28899, z: 0}
@@ -328,7 +328,7 @@ MonoBehaviour:
       - 0
       globalNormalsAngle: 0
       flipNormals: 0
-    vertexPathUpToDate: 0
+    vertexPathUpToDate: 1
     vertexPathMaxAngleError: 0.3
     vertexPathMinVertexSpacing: 0.01
     showTransformTool: 1
@@ -956,11 +956,11 @@ GameObject:
   - component: {fileID: 1051405273}
   m_Layer: 0
   m_Name: TestPath-3
-  m_TagString: ActivePath
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1051405273
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1041,7 +1041,7 @@ MonoBehaviour:
       - 0
       globalNormalsAngle: 0
       flipNormals: 0
-    vertexPathUpToDate: 1
+    vertexPathUpToDate: 0
     vertexPathMaxAngleError: 0.3
     vertexPathMinVertexSpacing: 0.01
     showTransformTool: 1
@@ -1344,7 +1344,7 @@ GameObject:
   - component: {fileID: 1252821667}
   m_Layer: 0
   m_Name: Managers
-  m_TagString: Untagged
+  m_TagString: ActivePath
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
@@ -1391,12 +1391,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e8d09d3ff8164604da4600021acb1cd0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PC: {fileID: 2080000784}
+  PC: {fileID: 124648775}
   DangerZone: 0.8
   StartZone: 0.2
   StartSpeed: 10
   DangerSpeed: 0.5
-  NormalSpeed: 2
+  NormalSpeed: 5
 --- !u!1 &1277933154
 GameObject:
   m_ObjectHideFlags: 0

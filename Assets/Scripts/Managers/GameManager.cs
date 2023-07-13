@@ -4,6 +4,12 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+    /*
+     *  Indices rise up from 0 at the frontmost to whatever the sphere size is at the back
+     *  newly spawned balls have a higher ID than the older ballz [hehehehe]
+     *  
+     *  
+     */
     public PathManager pathManager;
 
     public static List<GameObject> Spheres;
@@ -15,7 +21,7 @@ public class GameManager : MonoBehaviour
     public float SizeThresh;
     public float MinMagDist;
 
-    private float ChanegAmp = 3f;
+    private float ChanegAmp = 4f;
 
     public static int SphereNum = 0;
 
@@ -105,7 +111,7 @@ public class GameManager : MonoBehaviour
                 {
                     //Debug.Log("Index: " + i + "," + (i + 1) + " Difference: " + (SAI[i + 1].Traversed() - SAI[i].Traversed()));
 
-                    //Collision
+                    //Collision 
                     if (SAI[i].Traversed() - SAI[i + 1].Traversed() <= SizeThresh)
                     {
                         SAI[i].SetTraversed(SAI[i + 1].Traversed() + SizeThresh);
@@ -115,10 +121,11 @@ public class GameManager : MonoBehaviour
                             Strikable = false;
                             for (int j = i; j < Spheres.Count; j++)
                             {
-                                //if (SAI[j].ID > 0)
-                                //{
-                                    SAI[j].Speed = -10;
-                                //}
+                                if (SAI[j].ID > 0)
+                                {
+                                    //Pushback
+                                    SAI[j].Speed = -1;
+                                }
                             }
                             //Remove Pullee Att
                             for (int j = i; j > 0 && SAI[j-1].Pullee; j--)
@@ -132,12 +139,17 @@ public class GameManager : MonoBehaviour
                     SAI[i].IsMoving = false;
 
                     #region Magnetism
-
+                    
                     //Puller
-                    if (SAI[i].CID == SAI[i + 1].CID && SAI[i].Traversed() - SAI[i + 1].Traversed() >= SizeThresh + MinMagDist)
+                    if (SAI[i].CID == SAI[i + 1].CID && SAI[i].Traversed() - SAI[i + 1].Traversed() >= SizeThresh + MinMagDist) //If the spheres are far enough apart and the same colour
                     {
                         SAI[i].IsMoving = false;
                         SAI[i].Puller = true;
+                    }
+                    else if(SAI[i].CID != SAI[i + 1].CID)
+                    {
+                        SAI[i].IsMoving = false;
+                        SAI[i].Puller = false;
                     }
                     //Pullee
                     if (SAI[i + 1].Puller || SAI[i + 1].Pullee)
@@ -149,7 +161,18 @@ public class GameManager : MonoBehaviour
                             SAI[i].Speed = SAI[i + 1].Speed;
                         }
                     }
-
+                    /*
+                    //If the same colour is deleted before it hits
+                    if (SAI[i].Pullee && SAI[i+1].Puller || SAI[i].Pullee && SAI[i + 1].Pullee)
+                    {
+                        //Remove Pullee Att
+                        for (int j = i; j >= 0 && SAI[j-1].Pullee; j--)
+                        {
+                            Debug.LogWarning(j);
+                            SAI[j-1].Pullee = false;
+                        }
+                    }
+                    */
                     #endregion
 
                     #region SpherePhysics
@@ -158,7 +181,7 @@ public class GameManager : MonoBehaviour
                     {
                         Strikable = true;
                     }
-
+                    
                     #endregion
 
                 }

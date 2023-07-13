@@ -10,7 +10,7 @@ public class SphereAI : MonoBehaviour
     public bool Pullee = false;
     public float Speed;
     public float AimSpeed;
-    float DampeningSpeed = 3f;
+    float DampeningSpeed = 4f;
     public int ID;
     public int CID;
     //DEBUG
@@ -30,13 +30,14 @@ public class SphereAI : MonoBehaviour
     {
         if (IsMoving)
         {
+            //Get to desired speed
             if (Speed < AimSpeed)
             {
-                Speed -= AimSpeed * Time.deltaTime;
+                Speed -= AimSpeed;
             }
             else if (Speed > AimSpeed)
             {
-                Speed += AimSpeed * Time.deltaTime;
+                Speed += AimSpeed;
             }
 
             AreaTravelled += Speed * Time.deltaTime;
@@ -50,8 +51,8 @@ public class SphereAI : MonoBehaviour
         }
         else
         {
-            AreaTravelled += Speed * Time.deltaTime;
-            Speed *= .9999999f;
+            //AreaTravelled += Speed * Time.deltaTime;
+            Speed = 0;
             gameObject.GetComponent<SpriteRenderer>().color = SourceColour;
         }
 
